@@ -1,0 +1,55 @@
+<div class="flex">
+  <div class="feature ml-24 mt-12">
+    <div class="grid">
+      <span class="text-center font-bold text-3xl"> Farm Implements</span>
+    </div>
+
+    <!-- Tractors Grid -->
+    <div class="flex flex-wrap gap-12">
+      <div 
+        *ngFor="let usedTractor of usedTractors" 
+        class="product-card mt-6 w-1/4 shadow-xl rounded-lg relative bg-white border flex flex-col justify-between">
+        
+        <!-- Tractor Image -->
+        <div class="img">
+          <img 
+            [src]="usedTractor.Image" 
+            alt="{{usedTractor.brand}}" 
+            class="product-img w-full h-72 object-cover p-2 rounded-lg shadow-xl">
+        </div>
+
+        <!-- Tractor Details -->
+        <div class="product-info p-4 flex flex-col flex-grow">
+          <h2 class="product-title font-bold text-lg mb-2">{{usedTractor.brand}}</h2>
+          <p class="product-details text-gray-500 text-sm mb-4">
+            <span class="font-semibold">Location:</span> {{usedTractor.Location}} &middot;
+            <span class="font-semibold">Power:</span> {{usedTractor.HpPower}} HP &middot;
+            <span class="font-semibold">Hours Used:</span> {{usedTractor.HoursUsed}}
+          </p>
+          <p class="product-price font-bold text-lg text-gray-800">Price: ${{usedTractor.Price}}</p>
+          <p class="text-sm text-gray-500 mb-4">{{usedTractor.Description}}</p>
+        </div>
+
+        <!-- Action Buttons (Fixed Position) -->
+        <div class="p-4 border-t border-gray-200 flex justify-between items-center mt-auto">
+          <button 
+            class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 focus:outline-none">
+            Buy Now
+          </button>
+          <button 
+            (click)="toggleFavorite(usedTractor)" 
+            class="text-red-500 hover:text-red-600 focus:outline-none">
+            <i 
+              [class]="usedTractor.Favorite ? 'fas fa-heart' : 'far fa-heart'">
+            </i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Tractors Message -->
+    <div *ngIf="usedTractors.length === 0" class="text-center mt-4">
+      <p>No tractors found. Try different search criteria.</p>
+    </div>
+  </div>
+</div>

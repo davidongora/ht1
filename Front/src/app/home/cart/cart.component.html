@@ -1,0 +1,35 @@
+<!-- Cart Modal -->
+<ng-container *ngIf="isModalOpen">
+    <div class="modal-overlay" (click)="closeCart()"></div>
+    <div class="modal-content">
+      <h2 class="modal-title">Your Cart</h2>
+  
+      <ng-container *ngIf="(cartItems$ | async) as cartItems; else noProduct">
+        <div *ngIf="cartItems.length > 0">
+          <div *ngFor="let item of cartItems" class="cart-item">
+            <p>{{ item.name }} - ${{ item.price }}</p>
+            <p>Quantity: {{ item.quantity }}</p>
+            <button (click)="removeItem(item.id)">Remove</button>
+            <input 
+              type="number" 
+              [value]="item.quantity" 
+              (change)="updateQuantity(item.id, $event)" 
+              min="1">
+          </div>
+          
+          <div class="cart-total">
+            Total: ${{ (totalPrice$ | async) || 0 }}
+          </div>
+        </div>
+      </ng-container>
+  
+      <ng-template #noProduct>
+        <p>No products in your cart.</p>
+      </ng-template>
+  
+      <button class="close-btn" (click)="closeCart()">Close</button>
+    </div>
+  </ng-container>
+  
+  <!-- Open Cart Button -->
+  <button class="open-cart-btn" (click)="openCart()">View Cart ({{ (cartItems$ | async)?.length || 0 }})</button>

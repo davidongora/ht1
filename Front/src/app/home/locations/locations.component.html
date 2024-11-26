@@ -1,0 +1,56 @@
+<div class="flex">
+  <div class="feature ml-24 mt-12 mb-12">
+      <span class="text-center font-bold text-3xl mb-2">Dealers in kenya location</span>
+    </div>
+  </div>
+
+
+<div class="ml-12 mr-12">
+
+   
+<div class="relative">
+    <google-map 
+    height="910px" 
+    width="100%" 
+    [center]="center" 
+    [zoom]="zoom"
+    (mapMousemove)="move($event)"
+    (mapClick)="moveMap($event)">
+    
+    <map-marker 
+      *ngFor="let marker of markers" 
+      [position]="{ lat: marker.lat, lng: marker.lng }"
+      [options]="{
+        icon: {
+          path: 'M 0,0 m -5,0 a 5,5 0 1,0 10,0 a 5,5 0 1,0 -10,0',
+          fillColor: marker.color,
+          fillOpacity: 0.8,
+          strokeColor: 'black',
+          strokeWeight: 1,
+          scale: 2
+        },
+        title: marker.label
+      }">
+    </map-marker>
+  </google-map>
+  
+  <!-- <div *ngIf="display">
+    <h3>Current Location:</h3>
+    <p>Latitude: {{ display.lat | number:'1.4-4' }}</p>
+    <p>Longitude: {{ display.lng | number:'1.4-4' }}</p>
+  </div> -->
+  
+  <!-- <div *ngIf="display">
+    <h3>Current Location:</h3>
+    <p>Latitude: {{ display.lat | number:'1.4-4' }}</p>
+    <p>Longitude: {{ display.lng | number:'1.4-4' }}</p>
+  </div>
+  </div> -->
+  
+<!-- <p>Kenya Latitude</p>
+<div>Latitude: {{display?.lat}}</div>
+<div>Longitude: {{display?.lng}}</div> -->
+
+</div>
+
+

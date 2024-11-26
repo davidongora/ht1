@@ -1,0 +1,20 @@
+<!-- <p>tools works!</p> -->
+<div class="flex">
+  <div class="feature ml-24 mt-12">
+    <div class="grid">
+      <span class="text-center font-bold text-3xl">Dealers</span>
+    </div>
+
+  <div class="flex flex-wrap gap-8 ">
+      <div *ngFor="let state of tractorStates" class="state-box  mt-6 w-[224px] border border-gray-300 rounded-lg overflow-hidden">
+        <div class="img-container flex justify-center mt-4">
+          <img [src]="state.imageUrl" alt="{{ state.name }}" class="w-24 h-24 rounded-full object-cover">
+        </div>
+        <div class="state-info p-4 text-center">
+          <h2 class="state-name font-bold text-lg">{{ state.name }}</h2>
+        </div>
+      </div>
+    </div>
+</div>
+
+  

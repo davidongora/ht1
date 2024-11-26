@@ -1,0 +1,110 @@
+<div class="modal-body p-4 bg-white rounded-lg shadow-lg max-w-lg mx-auto  mt-12">
+  <!-- Title -->
+  <h1 class="text-2xl font-semibold mb-4 text-center">Find Your Right Tractor</h1>
+
+  <!-- Tabs for New and Used Tractor -->
+  <div class="flex justify-center mb-4">
+    <button 
+      (click)="tabSelected = 'new'"
+      [class.bg-orange-500]="tabSelected === 'new'"
+      [class.text-white]="tabSelected === 'new'"
+      class="px-6 py-2 rounded-l-lg focus:outline-none">
+      New Tractor
+    </button>
+    <button 
+      (click)="tabSelected = 'used'"
+      [class.bg-orange-500]="tabSelected === 'used'"
+      [class.text-white]="tabSelected === 'used'"
+      class="px-6 py-2 rounded-r-lg focus:outline-none">
+      Used Tractor
+    </button>
+  </div>
+
+  <!-- Tab Content: New Tractor or Used Tractor -->
+  <div class="mb-4">
+    <div *ngIf="tabSelected === 'new'">
+      <!-- New Tractor form section -->
+      <div class="mb-4">
+        <label for="brand" class="block">Select Brand</label>
+        <input
+          type="text"
+          id="brand"
+          name="brand"
+          ngModel
+          class="border rounded p-2 w-full"
+          placeholder="Select Brand"
+          required
+        />
+      </div>
+      <div class="mb-4">
+        <label for="state" class="block">State</label>
+        <input
+          type="text"
+          id="state"
+          name="state"
+          ngModel
+          class="border rounded p-2 w-full"
+          placeholder="Enter your state"
+          required
+        />
+      </div>
+    </div>
+
+    <div *ngIf="tabSelected === 'used'">
+      <!-- Used Tractor form section -->
+      <div class="mb-4">
+        <label for="brand" class="block">Select Brand</label>
+        <input
+          type="text"
+          id="brand"
+          name="brand"
+          ngModel
+          class="border rounded p-2 w-full"
+          placeholder="Select Brand"
+          required
+        />
+      </div>
+      <div class="mb-4">
+        <label for="state" class="block">State</label>
+        <input
+          type="text"
+          id="state"
+          name="state"
+          ngModel
+          class="border rounded p-2 w-full"
+          placeholder="Enter your state"
+          required
+        />
+      </div>
+      
+      <!-- <div class="mb-4 flex justify-center">
+        <button 
+          (click)="searchUsedTractor()"
+          class="bg-green-500 text-white px-4 py-2 rounded">
+          Search Used Tractor
+        </button>
+      </div> -->
+    </div>
+  </div>
+
+
+  <div *ngIf="tractors.length > 0" class="mt-4">
+    <h2 class="text-xl font-semibold mb-2">Tractor Results</h2>
+    <div *ngFor="let tractor of tractors" class="border p-4 rounded mb-4">
+      <h3 class="font-bold">{{ tractor.brand }}</h3>
+      <p>State: {{ tractor.state }}</p>
+      <p>Price: {{ tractor.price }}</p>
+    </div>
+  </div>
+  <div *ngIf="tractors.length === 0 && tabSelected === 'used'" class="text-center mt-4">
+    <p>No tractors found. Try different search criteria.</p>
+  </div>
+  
+
+  <!-- Submit button -->
+  <div class="flex justify-center px-4 py-2">
+    <button (click)="searchUsedTractor()" mat-button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded">
+      Search
+    </button>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<!-- <p>customers works!</p> -->
+
+<div class="card bg-custom-blue-blue p-4 rounded-xl mx-12 flex justify-center items-center">
+    <div class="flex flex-col items-center">
+      <p class="text-center">Over <span class="text-blue-600 font-bold text-lg">32K+ </span> fashion gurus are growing their brands with FashionForAll.</p>
+      <div class="flex gap-6 mt-4 align-center text-center">
+        <ng-container>
+          <span *ngFor="let item of images">
+            <p class="text-center">{{item}}</p>
+          </span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="product-list">
+    <div *ngFor="let product of products" class="product-item">
+      <img [src]="product.image_url" alt="{{ product.name }}" class="product-image">
+      <h3>{{ product.name }}</h3>
+      <p>{{ product.description }}</p>
+    </div>
+  </div> -->
+  

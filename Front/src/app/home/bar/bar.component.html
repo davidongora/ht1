@@ -1,0 +1,27 @@
+<div class="sidebar" [class.collapsed]="isSidebarCollapsed">
+  <button class="toggle-button" (click)="toggleSidebar()">Toggle Sidebar</button>
+
+  <div class="menu-items" *ngFor="let item of menuItems">
+    <div class="menu-title" *ngIf="item.isTitle">
+      <strong>{{ item.label }}</strong>
+      <div class="divider"></div>
+    </div>
+
+    <div class="menu-item" *ngIf="!item.isTitle">
+      <div class="menu-header" (click)="toggleSubItems(item.id)">
+        <i class="{{ item.icon }}"></i> 
+        {{ item.label }}
+        <span class="dropdown-arrow" [ngClass]="{'open': isSubItemsOpen(item.id)}">
+          ▼
+        </span>
+      </div>
+      
+      <div class="sub-items" *ngIf="isSubItemsOpen(item.id)">
+        <div class="sub-item" *ngFor="let subItem of item.subItems">
+          <a [href]="subItem.link">{{ subItem.label }}</a>
+          <div class="divider"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

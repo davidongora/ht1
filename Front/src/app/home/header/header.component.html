@@ -1,0 +1,320 @@
+<!-- <p>header works!</p> -->
+
+<div class="row  items-center justify-between gap-6 bg-gradient-to-r from-orange-500 to-orange-500 p-4">
+  <div class="flex items-center justify-between gap-8 text-white-800 ">
+    <!-- Logo and Title Section -->
+    <div class="flex items-center gap-4 hover:text-white">
+      <img src="../../../assets/HT_LOGO ICON_RGB_Orange.png" class="w-[60px] h-[60px]" alt="logo">
+      <span class="font-bold text-2xl" id="title">Hello Tractor</span>
+    </div>
+    
+    <!-- Search Section -->
+    <div class="flex items-center gap-4">
+      <!-- Search Input -->
+      <input
+        type="text"
+        id="first_name"
+        name="first_name"
+        ngModel
+        class="border border-gray-300 bg-gray-100 rounded-lg p-4 w-[660px] h-16 text-gray-700 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        placeholder="Search for tractor"
+        required
+      />
+    
+      <!-- Search Button -->
+      <button
+        class="p-3 bg-orange-500 h-16 w-16 text-white rounded-lg hover:bg-blue-600 shadow-lg flex items-center justify-center"
+      >
+        <i class="fa fa-search text-lg"></i>
+      </button>
+    </div>
+
+    <!-- <h1>{{ 'homePageTitle' }}</h1>
+    <button (click)="switchLanguage('fr')">French</button>
+    <button (click)="switchLanguage('en')">English</button> -->
+  
+    <!-- Icons and Buttons Section -->
+    <div class="flex items-center gap-12">
+      <!-- Cart Icon -->
+      <div class="flex items-center gap-2">
+        <!-- <i class="fa fa-shopping-cart  bg-white rounded-full p-2 shadow-2xl text-cyan-500 text-2xl" aria-hidden="true"></i> -->
+        <!-- <span class="text-white text-2sm">Cart</span> -->
+         <!-- Open Cart Button -->
+  <button class="open-cart-btn" (click)="openCart()">View Cart ({{ (cartItems$ | async)?.length || 0 }})        <i class="fa fa-shopping-cart  bg-white rounded-full p-2 shadow-2xl text-cyan-500 text-2xl" aria-hidden="true"></i>
+  </button>
+        <!-- item counter -->
+      </div>
+  
+
+      <button class="open-cart-btn" (click)="openCart()">Messages ({{ (cartItems$ | async)?.length || 0 }})        <i class="far fa-comment  bg-white rounded-full p-2 shadow-2xl text-cyan-500 text-2xl" aria-hidden="true"></i>
+      </button>
+      <!-- Login & Signup Buttons -->
+      <button class="bg-orange-600 text-white p-2 rounded-xl h-16 w-24" (click)="openDialog($event,loginModal)">Login</button>
+      <button class="bg-orange-600 text-white p-2 rounded-xl h-16 w-24" (click)="openDialog($event,Signup)">Signup</button>
+    </div>
+  </div>
+  
+ 
+  
+</div>
+<!-- Cart Modal -->
+<ng-container *ngIf="isModalOpen">
+  <div class="modal-overlay" (click)="closeCart()"></div>
+  <div class="modal-content">
+    <h2 class="modal-title">Your Cart</h2>
+
+    <ng-container *ngIf="(cartItems$ | async) as cartItems; else noProduct">
+      <div *ngIf="cartItems.length > 0">
+        <div *ngFor="let item of cartItems" class="cart-item">
+          <p>{{ item.name }} - ${{ item.price }}</p>
+          <p>Quantity: {{ item.quantity }}</p>
+          <button (click)="removeItem(item.id)">Remove</button>
+          <input 
+            type="number" 
+            [value]="item.quantity" 
+            (change)="updateQuantity(item.id, $event)" 
+            min="1">
+        </div>
+        
+        <div class="cart-total">
+          Total: ${{ (totalPrice$ | async) || 0 }}
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #noProduct>
+      <p class="bg-white shadow-xl h-[200px] w-[250px]">No products in your cart.</p>
+    </ng-template>
+
+    <button class="close-btn bg-red-500 rounded p-2" (click)="closeCart()">Close</button>
+  </div>
+</ng-container>
+
+  
+<div class="flex gap-16 items-center p-2 justify-center mt-6">
+  <!-- New Tractor Dropdown -->
+  <div class="relative group">
+    <span class="cursor-pointer hover:text-orange-500 active:text-blue-500 flex items-center" id="new-tractor">
+      New Tractor
+      <i class="ml-2 fas fa-chevron-down"></i>
+    </span>
+    <div class="absolute left-0 mt-2 w-48 p-4 bg-white text-black rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:block">
+      <a *ngFor="let item of newTractorItems" href="#" class="block p-2 hover:bg-orange-700 hover:text-white">{{ item }}</a>
+    </div>
+  </div>
+
+  <!-- Buy Used Dropdown -->
+  <div class="relative group">
+    <span class="cursor-pointer hover:text-orange-500 active:text-blue-500 flex items-center" id="buy-used">
+      Buy Used
+      <i class="ml-2 fas fa-chevron-down"></i>
+    </span>
+    <div class="absolute left-0 mt-2 w-48 p-4 bg-white text-black rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:block">
+      <a *ngFor="let item of buyUsedItems" href="#" class="block p-2 hover:bg-orange-700 hover:text-white">{{ item }}</a>
+    </div>
+  </div>
+
+  <!-- Sell Used Dropdown -->
+  <div class="relative group">
+    <span class="cursor-pointer hover:text-orange-500 active:text-blue-500 flex items-center" id="sell-used">
+      Sell Used
+      <i class="ml-2 fas fa-chevron-down"></i>
+    </span>
+    <div class="absolute left-0 mt-2 w-48 p-4 bg-white text-black rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:block">
+      <a *ngFor="let item of sellUsedItems" href="#" class="block p-2 hover:bg-orange-700 hover:text-white">{{ item }}</a>
+    </div>
+  </div>
+
+  <!-- Farm Equipment's Dropdown -->
+  <div class="relative group">
+    <span class="cursor-pointer hover:text-orange-500 active:text-blue-500 flex items-center" id="farm-equipment">
+      Farm Equipment's
+      <i class="ml-2 fas fa-chevron-down"></i>
+    </span>
+    <div class="absolute left-0 mt-2 w-48 p-4 bg-white text-black rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:block">
+      <a *ngFor="let item of farmEquipmentItems" href="#" class="block p-2 hover:bg-orange-700 hover:text-white ">{{ item }}</a>
+    </div>
+  </div>
+
+  <!-- Showrooms Dropdown -->
+  <div class="relative group">
+    <span class="cursor-pointer hover:text-orange-500 active:text-blue-500 flex items-center" id="showrooms">
+      Showrooms
+      <i class="ml-2 fas fa-chevron-down"></i>
+    </span>
+    <div class="absolute left-0 mt-2 w-48 p-4 bg-white text-black rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:block">
+      <a *ngFor="let item of showroomItems" href="#" class="block p-2 hover:bg-orange-700 hover:text-white">{{ item }}</a>
+    </div>
+  </div>
+
+  <!-- Loan Dropdown -->
+  <div class="relative group">
+    <span class="cursor-pointer hover:text-orange-500 active:text-blue-500 flex items-center" id="loan">
+      Loan
+      <i class="ml-2 fas fa-chevron-down"></i>
+    </span>
+    <div class="absolute left-0 mt-2 w-48 p-4 bg-white text-black rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:block">
+      <a *ngFor="let item of loanItems" href="#" class="block p-2 hover:bg-orange-700 hover:text-white">{{ item }}</a>
+    </div>
+  </div>
+
+  <!-- More Dropdown -->
+  <!-- <div class="relative group">
+    <span class="cursor-pointer hover:text-orange-500 active:text-blue-500 flex items-center" id="more">
+      More
+      <i class="ml-2 fas fa-chevron-down"></i>
+    </span>
+    <div class="absolute left-0 mt-2 w-48 p-4 bg-white text-black rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:block">
+      <a *ngFor="let item of moreItems" href="#" class="block p-2 hover:bg-orange-700 hover:text-white">{{ item }}</a>
+    </div>
+  </div> -->
+</div>
+
+
+  
+  
+
+
+<hr class="w-full my-4 bg-white">
+
+<ng-template #Signup let-dialogRef="dialogRef">
+  <div class="modal-header px-4 pt-4">
+    <h5 class="modal-title">Sign Up</h5>
+    <hr />
+  </div>
+
+  <div class="modal-body p-4">
+    <form #signupForm="ngForm" (ngSubmit)="onRegister(signupForm, dialogRef)">
+      <div class="mb-4">
+        <label for="first_name" class="block">First Name:</label>
+        <input
+          type="text"
+          id="first_name"
+          name="first_name"
+          ngModel
+          class="border rounded p-2 w-full"
+          placeholder="Enter your first name"
+          required
+        />
+      </div>
+      <div class="mb-4">
+        <label for="last_name" class="block">Last Name:</label>
+        <input
+          type="text"
+          id="last_name"
+          name="last_name"
+          ngModel
+          class="border rounded p-2 w-full"
+          placeholder="Enter your last name"
+          required
+        />
+      </div>
+      <div class="mb-4">
+        <label for="number" class="block">Number:</label>
+        <input
+          type="tel"
+          id="number"
+          name="number"
+          ngModel
+          class="border rounded p-2 w-full"
+          placeholder="Enter your number"
+          required
+        />
+      </div>
+      <div class="mb-4">
+        <label for="email" class="block">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          ngModel
+          class="border rounded p-2 w-full"
+          placeholder="Enter your email"
+          required
+        />
+      </div>
+      <div class="mb-4">
+        <label for="password" class="block">Password:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          ngModel
+          class="border rounded p-2 w-full"
+          placeholder="Enter your password"
+          required
+        />
+      </div>
+      <div class="flex justify-between px-4 py-2">
+        <button
+          mat-button
+          (click)="closeDialog(dialogRef)"
+          class="bg-red-500 text-white px-4 py-2 rounded"
+        >
+          Close
+        </button>
+        <button mat-button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">
+          Submit
+        </button>
+      </div>
+      <div class="social-login">
+        <button class="social-btn x-btn"><i class="fab fa-x"></i> X</button>
+        <button class="social-btn facebook-btn"><i class="fab fa-facebook-f"></i> Facebook</button>
+        <button class="social-btn instagram-btn"><i class="fab fa-instagram"></i> Instagram</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #loginModal let-dialogRef="dialogRef">
+  <div class="modal-header px-4 pt-4">
+    <h5 class="modal-title">Login</h5>
+    <hr />
+  </div>
+
+  <div class="modal-body p-4">
+    <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm, dialogRef)">
+      <div class="mb-4">
+        <label for="email" class="block">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          ngModel
+          class="border rounded p-2 w-full"
+          placeholder="Enter your email"
+          required
+        />
+      </div>
+      <div class="mb-4">
+        <label for="password" class="block">Password:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          ngModel
+          class="border rounded p-2 w-full"
+          placeholder="Enter your password"
+          required
+        />
+      </div>
+      <div class="flex justify-between px-4 py-2">
+        <button
+          mat-button
+          (click)="closeDialog(dialogRef)"
+          class="bg-red-500 text-white px-4 py-2 rounded"
+        >
+          Close
+        </button>
+        <button mat-button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
+          Login
+        </button>
+      </div>
+      <div class="social-login">
+        <button class="social-btn x-btn"><i class="fab fa-x"></i> X</button>
+        <button class="social-btn facebook-btn"><i class="fab fa-facebook-f"></i> Facebook</button>
+        <button class="social-btn instagram-btn"><i class="fab fa-instagram"></i> Instagram</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
